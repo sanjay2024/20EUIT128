@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require("bcryptjs");
 const company=mongoose.Schema({
         companyName:String,
         ownerName:String,
@@ -10,5 +9,6 @@ const company=mongoose.Schema({
                 require:true,
         }
 })
+
 const companyModel=mongoose.model("company",company);
 module.exports=companyModel;
