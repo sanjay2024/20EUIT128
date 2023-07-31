@@ -35,7 +35,7 @@ app.post('/train/register',async(req,res)=>{
 
 app.post("/train/register/auth",async (req,res)=>{
         const company = await companyModel.find({ rollNo: req.body.rollNo });
-        if(company){
+        if(company.length>0){
                 return res.json({
                         message:"already Registered"
                 })
@@ -45,7 +45,8 @@ app.post("/train/register/auth",async (req,res)=>{
                 res.status(200);
                 res.json({
                         tokenType:"Bearer",
-                        access_token:genearateToken(company._id)
+                        access_token:genearateToken(company._id),
+                        expires_In:"30d"
                 })
         }
 });
@@ -65,7 +66,10 @@ app.get("/train/trains/:Number", authMiddleWare, async (req, res) => {
   const train = await trainModel.findOne(req.params.Number);
   return res.json(train);
 });
-
+app.post('/train/addTrain',async (req,res)=>{
+        const createTrain= await trainModel.create(req.body);
+        return res.json(createTrain);
+})
 app.listen(3000,()=>{
         console.log("Server is Running");
 })
