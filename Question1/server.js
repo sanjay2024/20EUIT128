@@ -16,7 +16,7 @@ dbConnect();
 // registeration for companies
 
 app.post('/train/register',async(req,res)=>{
-        const checkAlreadyRegister= await companyModel.find(req.body.rollNo);
+        const checkAlreadyRegister= await companyModel.find({rollNo:req.body.rollNo});
         if(checkAlreadyRegister.length==0){
                 const createCompany = await companyModel.create(req.body);
                 return res.json({
@@ -34,7 +34,7 @@ app.post('/train/register',async(req,res)=>{
 // register Auth
 
 app.post("/train/register/auth",async (req,res)=>{
-        const company = await companyModel.find(req.body.rollNo);
+        const company = await companyModel.find({ rollNo: req.body.rollNo });
         if(company){
                 return res.json({
                         message:"already Registered"
